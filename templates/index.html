@@ -33,6 +33,12 @@
                 </p>
             {% endfor %}
 
+            <h3>Hot Posts within the last 3 hours?</h3>
+            {% for post in all_post %}
+                <p>
+                {{ post.title }}: {{ post.is_hot }}
+                </p>
+            {% endfor %}
         </div>
     </body>
 </html>

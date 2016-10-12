@@ -36,9 +36,15 @@ class Post(models.Model):
         timespan = datetime.now() - timedelta(days=1)
         if Post.objects.filter(creation_time__gte=timespan):
             return True
+        else:
+            return False
 
     def is_hot(self):
-        pass
+        timespan = datetime.now() - timedelta(hours=3)
+        if Comment.objects.filter(post=self).filter(created_time__gt=timespan).count() > 3:
+            return True
+        else:
+            return False
 
     def __str__(self):
         return self.title
