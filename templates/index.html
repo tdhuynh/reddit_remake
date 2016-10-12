@@ -12,22 +12,27 @@
 
             {% for sub in all_subreddit %}
                 <p>
-                    <a href="#">{{ sub.name }}</a> post count: {{ sub.current_count }}
+                    <a href="#">{{ sub.name }}</a>
+                    <p>
+                        post count - all time: {{ sub.current_count }}
+                    </p>
+                    <p>
+                        post count - today: {{ sub.today_count }}
+
+                    </p>
+                    <p>
+                        post count average - weekly: {{ sub.daily_average }}
+                    </p>
                 </p>
             {% endfor %}
 
+            <h3>Recent Posts with the last 24 hours?</h3>
             {% for post in all_post %}
                 <p>
-                    {{ post.creation_time }} {{ post }}
+                {{ post.title }}: {{ post.is_recent }}
                 </p>
             {% endfor %}
 
-
-            {% for sub in all_subreddit %}
-                <p>
-                     {{ sub.today_count }}
-                </p>
-            {% endfor %}
         </div>
     </body>
 </html>

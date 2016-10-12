@@ -12,11 +12,12 @@ class Subreddit(models.Model):
         return Post.objects.filter(subreddit=self).count()
 
     def today_count(self):
-        date = datetime.now() - timedelta(days=1)
-        return Post.objects.filter(subreddit=self).filter(creation_time__gte=date).count()
+        timespan = datetime.now() - timedelta(days=1)
+        return Post.objects.filter(subreddit=self).filter(creation_time__gte=timespan).count()
 
     def daily_average(self):
-        pass
+        timespan = datetime.now() - timedelta(days=7)
+        return round(Post.objects.filter(subreddit=self).filter(creation_time__gte=timespan).count()/7, 3)
 
     def __str__(self):
         return self.name
@@ -32,7 +33,9 @@ class Post(models.Model):
     user = models.ForeignKey(User)
 
     def is_recent(self):
-        pass
+        timespan = datetime.now() - timedelta(days=1)
+        if Post.objects.filter(creation_time__gte=timespan):
+            return True
 
     def is_hot(self):
         pass
