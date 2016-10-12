@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime, timedelta
 
 
 class Subreddit(models.Model):
@@ -8,10 +9,11 @@ class Subreddit(models.Model):
     creation = models.DateTimeField(auto_now_add=True)
 
     def current_count(self):
-        pass
+        return Post.objects.filter(subreddit=self).count()
 
     def today_count(self):
-        pass
+        date = datetime.now() - timedelta(days=1)
+        return Post.objects.filter(subreddit=self).filter(creation_time__gte=date).count()
 
     def daily_average(self):
         pass
@@ -35,6 +37,8 @@ class Post(models.Model):
     def is_hot(self):
         pass
 
+    def __str__(self):
+        return self.title
 
 class Comment(models.Model):
     text = models.TextField(max_length=255)
@@ -42,4 +46,6 @@ class Comment(models.Model):
     post = models.ForeignKey(Post)
     created_time = models.DateTimeField(auto_now_add=True)
     modified_time = models.DateTimeField(auto_now=True)
-    
+
+    def __str__(self):
+        return self.text

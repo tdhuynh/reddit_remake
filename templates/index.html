@@ -1,0 +1,33 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>hello</title>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" media="screen" title="no title">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Reddit-ish</h1>
+
+            {% for sub in all_subreddit %}
+                <p>
+                    <a href="#">{{ sub.name }}</a> post count: {{ sub.current_count }}
+                </p>
+            {% endfor %}
+
+            {% for post in all_post %}
+                <p>
+                    {{ post.creation_time }} {{ post }}
+                </p>
+            {% endfor %}
+
+
+            {% for sub in all_subreddit %}
+                <p>
+                     {{ sub.today_count }}
+                </p>
+            {% endfor %}
+        </div>
+    </body>
+</html>
