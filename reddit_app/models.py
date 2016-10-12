@@ -34,3 +34,12 @@ class Post(models.Model):
 
     def is_hot(self):
         pass
+
+
+class Comment(models.Model):
+    text = models.TextField(max_length=255)
+    user = models.ForeignKey(User)
+    post = models.ForeignKey(Post)
+    created_time = models.DateTimeField(auto_now_add=True)
+    modified_time = models.DateTimeField(auto_now=True)
+    
