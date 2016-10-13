@@ -17,7 +17,11 @@
         {{ object.is_hot }}
     </p>
     <p>
-        {%  %}
+        {% for comment in object.all_comments %}
+            <ul>
+                <li>{{ comment.text }}</li>
+            </ul>
+        {% endfor %}
     </p>
 
 {% endblock %}
