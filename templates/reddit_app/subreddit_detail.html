@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ object }}</h1>
+    <h4>Created {{ object.creation|timesince }} ago</h4>
+    {{ object.description }}
+
+
+    <h3>Most Recent Posts</h3>
+    {% for post in object.recent_posts %}
+        <ul>
+            <li><a href="{% url 'post_detail_view' post.id %}">{{ post }}</a></li>
+        </ul>
+    {% endfor %}
+{% endblock %}

@@ -8,6 +8,7 @@ class Subreddit(models.Model):
     description = models.TextField()
     creation = models.DateTimeField(auto_now_add=True)
 
+
     def current_count(self):
         return Post.objects.filter(subreddit=self).count()
 
@@ -18,6 +19,9 @@ class Subreddit(models.Model):
     def daily_average(self):
         timespan = datetime.now() - timedelta(days=7)
         return round(Post.objects.filter(subreddit=self).filter(creation_time__gte=timespan).count()/7, 3)
+
+    def recent_posts(self):
+        return Post.objects.filter(subreddit=self)[:20]
 
     def __str__(self):
         return self.name
@@ -32,6 +36,9 @@ class Post(models.Model):
     subreddit = models.ForeignKey(Subreddit)
     user = models.ForeignKey(User)
 
+    class Meta:
+        ordering = ("-creation_time",)
+
     def is_recent(self):
         timespan = datetime.now() - timedelta(days=1)
         if Post.objects.filter(creation_time__gte=timespan):
@@ -45,6 +52,9 @@ class Post(models.Model):
             return True
         else:
             return False
+
+    def all_comments(self):
+        return Comment.objects.filter(post=self)
 
     def __str__(self):
         return self.title

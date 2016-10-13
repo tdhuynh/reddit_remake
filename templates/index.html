@@ -1,13 +1,5 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>hello</title>
-        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" media="screen" title="no title">
-    </head>
-    <body>
-        <div class="container">
+{% extends 'base.html' %}
+{% block content %}
             <h1>Reddit-ish</h1>
 
             {% for sub in all_subreddit %}
@@ -39,6 +31,4 @@
                 {{ post.title }}: {{ post.is_hot }}
                 </p>
             {% endfor %}
-        </div>
-    </body>
-</html>
+{% endblock %}
