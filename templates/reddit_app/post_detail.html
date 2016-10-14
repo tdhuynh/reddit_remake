@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
     <p>
         {{ object }}
     </p>
     <p>
         {{ object.description }}
+        <a href="{% url 'post_update_view' object.id %}">Update Post</a>
     </p>
     <p>
         {{ object.user }}
@@ -17,10 +19,15 @@
         {{ object.is_hot }}
     </p>
     <p>
+        <a href="{% url 'comment_create_view' object.id %}">Add Comment</a>
+    </p>
+    <p>
         {% for comment in object.all_comments %}
-            <ul>
-                <li>{{ comment.text }}</li>
-            </ul>
+            <p>
+                {{ comment.text }}
+                <a href="{% url 'comment_update_view' comment.id %}">Update Comment</a>
+            </p>
+
         {% endfor %}
     </p>
 
