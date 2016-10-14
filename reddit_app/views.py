@@ -5,6 +5,8 @@ from django.views.generic.edit import CreateView, UpdateView
 
 from reddit_app.models import Subreddit, Post, Comment
 
+from django.urls import reverse_lazy
+
 
 def index_view(request):
     context = {
@@ -24,11 +26,22 @@ class SubredditDetailView(DetailView):
     model = Subreddit
 
 
-class PostDetailView(DetailView):
-    model = Post
-
-
 class SubredditCreateView(CreateView):
     model = Subreddit
     success_url = "/"
     fields = ('name', 'description',)
+
+
+class SubredditUpdateView(UpdateView):
+    model = Subreddit
+    success_url = "/"
+    fields = ('name', 'description',)
+
+
+class PostDetailView(DetailView):
+    model = Post
+
+class PostCreateView(CreateView):
+    model = Post
+    success_url = reverse_lazy('subreddit_detail_view')
+    fields = ('title', 'description', 'url')
