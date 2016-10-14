@@ -8,7 +8,6 @@ class Subreddit(models.Model):
     description = models.TextField()
     creation = models.DateTimeField(auto_now_add=True)
 
-
     def current_count(self):
         return Post.objects.filter(subreddit=self).count()
 
@@ -58,6 +57,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class Comment(models.Model):
     text = models.TextField(max_length=255)

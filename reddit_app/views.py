@@ -26,3 +26,9 @@ class SubredditDetailView(DetailView):
 
 class PostDetailView(DetailView):
     model = Post
+
+
+class SubredditCreateView(CreateView):
+    model = Subreddit
+    success_url = "/"
+    fields = ('name', 'description',)
