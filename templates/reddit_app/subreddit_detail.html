@@ -1,19 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <a href="{% url 'subreddit_update_view' object.id %}">Update Subreddit</a>
-    <a href="{% url 'post_create_view' object.id %}">Create Post</a>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ object }}</a></h3>
+    </div>
+    <div class="panel-body">
+        <p>
+            {{ object.description }}
+        </p>
+    </div>
+    <div class="panel-footer">
+    <p>
+        Created {{ object.creation|timesince }} ago
+    </p>
+    <p>
+        <a href="{% url 'subreddit_update_view' object.id %}">Update Subreddit</a>
+    </p>
+    <p>
+        <a href="{% url 'post_create_view' object.id %}">Create Post</a>
+    </p>
+    </div>
+</div>
 
-
-    <h1>{{ object }}</h1>
-    <h4>Created {{ object.creation|timesince }} ago</h4>
-    {{ object.description }}
-
-
-    <h3>Most Recent Posts</h3>
-    {% for post in object.recent_posts %}
-        <ul>
-            <li><a href="{% url 'post_detail_view' post.id %}">{{ post }}</a></li>
-        </ul>
-    {% endfor %}
+<h4>Most Recent Posts</h4>
+      {% for post in object.recent_posts %}
+      <div class="panel panel-default">
+        <div class="panel-body">
+              <a href="{% url 'post_detail_view' post.id %}">{{ post }}</a>
+              <p>
+                  Created by <b>{{ post.user }}</b>, {{ post.creation_time|timesince }} ago.
+              </p>
+          </div>
+        </div>
+      {% endfor %}
 {% endblock %}

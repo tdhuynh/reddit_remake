@@ -2,18 +2,18 @@
 
 {% block content %}
 {% for subreddit in object_list %}
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <p>
-                <a href="{% url 'subreddit_detail_view' subreddit.id %}">{{ subreddit }}</a>
-            </p>
-            <p>
-                {{ subreddit.description }}
-            </p>
-            <p>
-                Posts: {{ subreddit.current_count }}
-            </p>
-        </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><a href="{% url 'subreddit_detail_view' subreddit.id %}">{{ subreddit }}</a></h3>
     </div>
+    <div class="panel-body">
+        <p>
+            {{ subreddit.description }}
+        </p>
+        <p>
+            <b>Posts: {{ subreddit.current_count }}</b>
+        </p>
+    </div>
+</div>
     {% endfor %}
 {% endblock %}

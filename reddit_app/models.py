@@ -41,16 +41,16 @@ class Post(models.Model):
     def is_recent(self):
         timespan = datetime.now() - timedelta(days=1)
         if Post.objects.filter(creation_time__gte=timespan):
-            return True
+            return "YES"
         else:
-            return False
+            return "NO"
 
     def is_hot(self):
         timespan = datetime.now() - timedelta(hours=3)
         if Comment.objects.filter(post=self).filter(created_time__gt=timespan).count() > 3:
-            return True
+            return "YES"
         else:
-            return False
+            return "NO"
 
     def all_comments(self):
         return Comment.objects.filter(post=self)

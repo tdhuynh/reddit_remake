@@ -9,15 +9,6 @@ from reddit_app.models import Subreddit, Post, Comment
 from django.urls import reverse
 
 
-def index_view(request):
-    context = {
-        "all_subreddit": Subreddit.objects.all(),
-        "all_post": Post.objects.all(),
-        "all_comments": Comment.objects.all(),
-    }
-    return render(request, 'index.html', context)
-
-
 class SubredditView(ListView):
     template_name = 'subreddits.html'
     model = Subreddit
@@ -35,10 +26,11 @@ class SubredditCreateView(CreateView):
 
 class SubredditUpdateView(UpdateView):
     model = Subreddit
+    success_url = "/"
     fields = ('name', 'description',)
 
-    def get_success_url(self, **kwargs):
-        return reverse('subreddit_detail_view', args=self.kwargs['pk'])
+    # def get_success_url(self, **kwargs):
+    #     return reverse('subreddit_detail_view', args=self.kwargs['pk'])
 
 
 class PostDetailView(DetailView):
@@ -47,6 +39,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(CreateView):
     model = Post
+    success_url = "/"
     fields = ('title', 'description', 'url')
 
     def form_valid(self, form):
@@ -55,20 +48,22 @@ class PostCreateView(CreateView):
         instance.subreddit = Subreddit.objects.get(id=self.kwargs['pk'])
         return super().form_valid(form)
 
-    def get_success_url(self, **kwargs):
-        return reverse('subreddit_detail_view', args=self.kwargs['pk'])
+    # def get_success_url(self, **kwargs):
+    #     return reverse('subreddit_detail_view', args=self.kwargs['pk'])
 
 
 class PostUpdateView(UpdateView):
     model = Post
+    success_url = "/"
     fields = ('title', 'description', 'url')
 
-    def get_success_url(self, **kwargs):
-        return reverse('post_detail_view', args=self.kwargs['pk'])
+    # def get_success_url(self, **kwargs):
+    #     return reverse('post_detail_view', args=self.kwargs['pk'])
 
 
 class CommentCreateView(CreateView):
     model = Comment
+    success_url = "/"
     fields = ('text',)
 
     def form_valid(self, form):
@@ -77,8 +72,8 @@ class CommentCreateView(CreateView):
         instance.post = Post.objects.get(id=self.kwargs['pk'])
         return super().form_valid(form)
 
-    def get_success_url(self, **kwargs):
-        return reverse('post_detail_view', args=self.kwargs['pk'])
+    # def get_success_url(self, **kwargs):
+    #     return reverse('post_detail_view', args=self.kwargs['pk'])
 
 
 class CommentUpdateView(UpdateView):

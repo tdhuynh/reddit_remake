@@ -13,8 +13,8 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$', SubredditDetailView.as_view(), name='subreddit_detail_view'),
     url(r'^(?P<pk>\d+)/update_sub/$', SubredditUpdateView.as_view(), name='subreddit_update_view'),
     url(r'^(?P<pk>\d+)/create_post/$', PostCreateView.as_view(), name='post_create_view'),
-    url(r'^(?P<pk>\d+)/post/$', PostDetailView.as_view(), name='post_detail_view'),
-    url(r'^(?P<pk>\d+)/post/update_post/$', PostUpdateView.as_view(), name='post_update_view'),
+    url(r'^post/(?P<pk>\d+)/$', PostDetailView.as_view(), name='post_detail_view'),
+    url(r'^post/(?P<pk>\d+)/update_post/$', PostUpdateView.as_view(), name='post_update_view'),
     url(r'^post/(?P<pk>\d+)/create_comment/$', CommentCreateView.as_view(), name='comment_create_view'),
-    url(r'^(?P<pk>\d+)/update_comment/$', CommentUpdateView.as_view(), name='comment_update_view'),
+    url(r'^comment/(?P<pk>\d+)/update_comment/$', CommentUpdateView.as_view(), name='comment_update_view'),
 ]
