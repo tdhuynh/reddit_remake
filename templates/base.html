@@ -24,7 +24,8 @@
             {% else %}
                   <a class="btn btn-default btn-xs" role="button" href="{% url 'logout' %}?next={% url 'subreddit_view' %}">Logout</a>
             {% endif %}
-
+            <br>
+            <br>
 
             {% block content %}
             {% endblock %}
