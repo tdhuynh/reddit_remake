@@ -9,18 +9,18 @@ class Subreddit(models.Model):
     creation = models.DateTimeField(auto_now_add=True)
 
     def current_count(self):
-        return Post.objects.filter(subreddit=self).count()
+        return self.post_set.count()
 
     def today_count(self):
         timespan = datetime.now() - timedelta(days=1)
-        return Post.objects.filter(subreddit=self).filter(creation_time__gte=timespan).count()
+        return self.post_set.filter(creation_time__gte=timespan).count()
 
     def daily_average(self):
         timespan = datetime.now() - timedelta(days=7)
-        return round(Post.objects.filter(subreddit=self).filter(creation_time__gte=timespan).count()/7, 3)
+        return round(self.post_set.filter(creation_time__gte=timespan).count()/7, 3)
 
     def recent_posts(self):
-        return Post.objects.filter(subreddit=self)[:20]
+        return self.post_set.all()[:20]
 
     def __str__(self):
         return self.name
@@ -47,13 +47,13 @@ class Post(models.Model):
 
     def is_hot(self):
         timespan = datetime.now() - timedelta(hours=3)
-        if Comment.objects.filter(post=self).filter(created_time__gt=timespan).count() > 3:
+        if self.comment_set.filter(created_time__gt=timespan).count() > 3:
             return "YES"
         else:
             return "NO"
 
     def all_comments(self):
-        return Comment.objects.filter(post=self)
+        return self.comment_set.all()
 
     def __str__(self):
         return self.title
