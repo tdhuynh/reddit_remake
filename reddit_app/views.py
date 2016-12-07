@@ -8,6 +8,10 @@ from reddit_app.models import Subreddit, Post, Comment
 
 from django.urls import reverse
 
+class IndexView(ListView):
+    template_name = 'index.html'
+    model = Post
+
 
 class SubredditView(ListView):
     template_name = 'subreddits.html'

@@ -2,12 +2,14 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from reddit_app.views import SubredditView, SubredditDetailView, PostDetailView, \
                              SubredditCreateView, SubredditUpdateView, PostCreateView, \
-                             UserCreateView, PostUpdateView, CommentCreateView, CommentUpdateView
+                             UserCreateView, PostUpdateView, CommentCreateView, CommentUpdateView, \
+                             IndexView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url('^', include('django.contrib.auth.urls')),
-    url(r'^$', SubredditView.as_view(), name='subreddit_view'),
+    url(r'^$', IndexView.as_view(), name="index_view"),
+    url(r'^subreddits/$', SubredditView.as_view(), name='subreddit_view'),
     url(r'^create_user/$', UserCreateView.as_view(), name='user_create_view'),
     url(r'^create_sub/$', SubredditCreateView.as_view(), name='subreddit_create_view'),
     url(r'^(?P<pk>\d+)/$', SubredditDetailView.as_view(), name='subreddit_detail_view'),

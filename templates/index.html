@@ -1,21 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-            <h1>Reddit-ish</h1>
 
-            {% for sub in all_subreddit %}
-                <p>
-                    <a href="#">{{ sub.name }}</a>
-                    <p>
-                        post count - all time: {{ sub.current_count }}
-                    </p>
-                    <p>
-                        post count - today: {{ sub.today_count }}
+            {% for post in object_list %}
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                  <a href="{% url 'post_detail_view' post.id %}">{{ post.title }}</a>
+                </div>
+                <div class="panel-footer">
+                    Submitted {{ post.creation_time|timesince }} ago by {{ post.user }}
+                    to <a href="{% url 'subreddit_detail_view' post.subreddit.id %}">{{ post.subreddit }}</a>
 
-                    </p>
-                    <p>
-                        post count average - weekly: {{ sub.daily_average }}
-                    </p>
-                </p>
+                </div>
+              </div>
             {% endfor %}
 
             <h3>Recent Posts within the last 24 hours?</h3>
