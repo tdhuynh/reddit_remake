@@ -3,13 +3,25 @@
 
             {% for post in object_list %}
               <div class="row">
-              <div class="col-sm-2">
-                hey 123
+              <div class="col-sm-1">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="btn-toolbar" role='group'>
+                      <form class="" action="{% url 'post_upvote_view' post.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="value" value=true>
+                        <button type="submit" name="">
+                          <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                  </div>
+
+                </div>
               </div>
 
-              <div class="col-sm-10">
-
-
+              <div class="col-sm-11">
               <div class="panel panel-default">
                 <div class="panel-body">
                   <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
@@ -21,7 +33,7 @@
                 </div>
               </div>
               </div>
-              </div>
+            </div>
             {% endfor %}
 
             <h3>Recent Posts within the last 24 hours?</h3>
