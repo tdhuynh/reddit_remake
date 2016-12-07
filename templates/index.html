@@ -1,24 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
 
+            <div class="row">
             {% for post in object_list %}
-              <div class="row">
-              <div class="col-sm-1">
-                <div class="panel panel-default">
-                  <div class="panel-body">
+              <div class="col-sm-1 ">
+                  <div class="row center-block">
+                    <div class="col">
                     <div class="btn-toolbar" role='group'>
                       <form class="" action="{% url 'post_upvote_view' post.id %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="value" value=true>
-                        <button type="submit" name="">
+                        <button type="submit" class='btn btn-default btn-sm'>
                           <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
                         </button>
                       </form>
                     </div>
                   </div>
                   </div>
-
-                </div>
+                  <div class="row center-block">
+                    <div class="col">
+                      <span class="badge">{{ post.score }}</span>
+                    </div>
+                  </div>
+                  <div class="row center-block">
+                    <div class="col">
+                    <div class="btn-toolbar" role='group'>
+                      <form class="" action="{% url 'post_downvote_view' post.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="value" value=false>
+                        <button type="submit" class='btn btn-default btn-sm'>
+                          <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                  </div>
               </div>
 
               <div class="col-sm-11">
@@ -33,8 +49,10 @@
                 </div>
               </div>
               </div>
+              {% endfor %}
             </div>
-            {% endfor %}
+
+
 
             <h3>Recent Posts within the last 24 hours?</h3>
             {% for post in all_post %}

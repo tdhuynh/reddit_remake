@@ -58,6 +58,10 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def score(self):
+        return sum([post_obj.score for post_obj in self.postvote_set.all()])
+
 
 class Comment(models.Model):
     text = models.TextField(max_length=255)

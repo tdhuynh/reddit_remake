@@ -106,7 +106,7 @@ class PostVoteView(CreateView):
 
     def form_valid(self, form):
         try:
-            PostVote.objects.get(user=self.request.user, post_id=self.kwargs['pk']).delete
+            PostVote.objects.get(user=self.request.user, post_id=self.kwargs['pk']).delete()
         except PostVote.DoesNotExist:
             pass
         instance = form.save(commit=False)
