@@ -35,6 +35,9 @@ class SubredditUpdateView(UpdateView):
     def get_success_url(self, **kwargs):
         return reverse('subreddit_detail_view', args=[int(self.kwargs['pk'])])
 
+    def get_queryset(self):
+        return Subreddit.objects.filter(user=self.request.user)
+
 
 class PostDetailView(DetailView):
     model = Post
@@ -61,6 +64,8 @@ class PostUpdateView(UpdateView):
     def get_success_url(self, **kwargs):
         return reverse('post_detail_view', args=[int(self.kwargs['pk'])])
 
+    def get_queryset(self):
+        return Post.objects.filter(user=self.request.user)
 
 class CommentCreateView(CreateView):
     model = Comment
@@ -81,7 +86,11 @@ class CommentUpdateView(UpdateView):
     fields = ('text',)
 
     def get_success_url(self, **kwargs):
-        return reverse('post_detail_view', args=[int(self.kwargs['pk'])])
+        post_id = Comment.objects.get(id=self.kwargs["pk"]).post.id
+        return reverse('post_detail_view', args=[post_id])
+
+    def get_queryset(self):
+        return Comment.objects.filter(user=self.request.user)
 
 
 class UserCreateView(CreateView):
