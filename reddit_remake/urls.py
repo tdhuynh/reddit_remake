@@ -3,7 +3,7 @@ from django.contrib import admin
 from reddit_app.views import SubredditView, SubredditDetailView, PostDetailView, \
                              SubredditCreateView, SubredditUpdateView, PostCreateView, \
                              UserCreateView, PostUpdateView, CommentCreateView, CommentUpdateView, \
-                             IndexView
+                             IndexView, PostVoteView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -19,4 +19,6 @@ urlpatterns = [
     url(r'^post/(?P<pk>\d+)/update_post/$', PostUpdateView.as_view(), name='post_update_view'),
     url(r'^post/(?P<pk>\d+)/create_comment/$', CommentCreateView.as_view(), name='comment_create_view'),
     url(r'^comment/(?P<pk>\d+)/update_comment/$', CommentUpdateView.as_view(), name='comment_update_view'),
+    url(r'^post/(?P<pk>\d+)/upvote/$', PostVoteView.as_view(), name='post_upvote_view'),
+    url(r'^post/(?P<pk>\d+)/downvote/$', PostVoteView.as_view(), name='post_downvote_view')
 ]

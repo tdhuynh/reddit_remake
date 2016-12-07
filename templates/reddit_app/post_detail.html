@@ -18,12 +18,6 @@
         Created by <b>{{ object.user }}</b>, {{ object.creation_time|timesince }} ago
     </p>
     <p>
-        RECENT? <span style="color:red;"><b>{{ object.is_recent }}</b></span>
-    </p>
-    <p>
-        HOT? <span style="color:red;"><b>{{ object.is_hot }}</b></span>
-    </p>
-    <p>
         <a href="{% url 'post_update_view' object.id %}">Update Post</a>
     </p>
     <p>
@@ -52,3 +46,10 @@
     </p>
 
 {% endblock %}
+
+<p>
+    RECENT? <span style="color:red;"><b>{{ object.is_recent }}</b></span>
+</p>
+<p>
+    HOT? <span style="color:red;"><b>{{ object.is_hot }}</b></span>
+</p>

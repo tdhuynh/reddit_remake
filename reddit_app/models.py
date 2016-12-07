@@ -68,3 +68,18 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class PostVote(models.Model):
+    user = models.ForeignKey(User)
+    post = models.ForeignKey(Post)
+    value = models.BooleanField()
+
+    class Meta:
+        unique_together = ('user', 'post')
+
+    @property
+    def score(self):
+        if self.value:
+            return 1
+        return -1
