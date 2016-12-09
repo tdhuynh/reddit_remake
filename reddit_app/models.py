@@ -61,7 +61,7 @@ class Post(models.Model):
 
     @property
     def score(self):
-        return sum([post_obj.score for post_obj in self.postvote_set.all()])
+        return sum(post_obj.score for post_obj in self.postvote_set.all())
 
 
 class Comment(models.Model):
@@ -78,6 +78,7 @@ class Comment(models.Model):
     def score(self):
         return sum([comment_obj.comment_score for comment_obj in self.commentvote_set.all()])
 
+
 class PostVote(models.Model):
     user = models.ForeignKey(User)
     post = models.ForeignKey(Post)
@@ -87,7 +88,7 @@ class PostVote(models.Model):
         unique_together = ('user', 'post')
 
     def __str__(self):
-        return "{} - {}".format(self.post.title, self.score)
+        return "{} - {}".format(self.post.id, self.score)
 
     @property
     def score(self):

@@ -35,8 +35,8 @@ class SubredditUpdateView(UpdateView):
     def get_success_url(self, **kwargs):
         return reverse('subreddit_detail_view', args=[int(self.kwargs['pk'])])
 
-    def get_queryset(self):
-        return Subreddit.objects.filter(user=self.request.user)
+    # def get_queryset(self):
+    #     return Subreddit.objects.filter(user=self.request.user)
 
 
 class PostDetailView(DetailView):

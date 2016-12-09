@@ -1,7 +1,68 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="panel panel-default">
+<div class="row">
+<div class="col-md-10">
+  <div class="row">
+
+      {% for post in object.recent_posts %}
+      <div class="col-md-1">
+        <div class="col-sm-1 ">
+            <div class="row center-block">
+              <div class="col">
+              <div class="btn-toolbar" role='group'>
+                <form class="" action="{% url 'post_upvote_view' post.id %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="value" value=true>
+                  <button type="submit" class='btn btn-default btn-sm'>
+                    <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                  </button>
+                </form>
+              </div>
+            </div>
+            </div>
+            <div class="row center-block">
+              <div class="col">
+                <span class="badge">{{ post.score }}</span>
+              </div>
+            </div>
+            <div class="row center-block">
+              <div class="col">
+              <div class="btn-toolbar" role='group'>
+                <form class="" action="{% url 'post_downvote_view' post.id %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="value" value=false>
+                  <button type="submit" class='btn btn-default btn-sm'>
+                    <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                  </button>
+                </form>
+              </div>
+            </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-11">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            {% if post.url %}
+              <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+              <a href="{{ post.url }}">{{ post.title }}</a>
+            {% else %}
+              <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+              <a href="{% url 'post_detail_view' post.id %}">{{ post.title }}</a>
+            {% endif %}                <p>
+                    Created by <b>{{ post.user }}</b>, {{ post.creation_time|timesince }} ago.
+                </p>
+            </div>
+          </div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+
+<div class="col-md-2">
+  <div class="affix">
+  <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">{{ object }}</a></h3>
     </div>
@@ -18,20 +79,12 @@
         <a href="{% url 'subreddit_update_view' object.id %}">Update Subreddit</a>
     </p>
     <p>
-        <a href="{% url 'post_create_view' object.id %}">Create Post</a>
+        <a href="{% url 'post_create_view' object.id %}">New Post</a>
     </p>
     </div>
+  </div>
+  </div>
 </div>
 
-<h4>Most Recent Posts</h4>
-      {% for post in object.recent_posts %}
-      <div class="panel panel-default">
-        <div class="panel-body">
-              <a href="{% url 'post_detail_view' post.id %}">{{ post }}</a>
-              <p>
-                  Created by <b>{{ post.user }}</b>, {{ post.creation_time|timesince }} ago.
-              </p>
-          </div>
-        </div>
-      {% endfor %}
+</div>
 {% endblock %}

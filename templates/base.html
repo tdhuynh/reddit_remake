@@ -8,15 +8,17 @@
     <style media="screen">
         body {
             background-color: silver;
+            padding-top: 70px;
         }
 
         .list-group {line-height:30px}
     </style>
     </head>
     <body>
-            <nav class="navbar navbar-default navbar-static-top">
+            <nav class="navbar navbar-default navbar-fixed-top">
               <div class="container-fluid">
                 <ul class='nav navbar-nav'>
+                  <li><h3 class="pull-right navbar-text">Reddit-ish</h3></li>
                   <li><a href="{% url 'index_view' %}">Home Page</a></li>
                   <li><a href="{% url 'subreddit_view' %}">All Subreddits</a></li>
                   <li><a href="{% url 'subreddit_create_view' %}">Add Subreddit</a></li>
@@ -34,8 +36,7 @@
               </div>
             </nav>
 
-        <div class="container">
-          <h3>Reddit-ish</h3>
+        <div class="container-fluid">
 
             {% block content %}
             {% endblock %}
