@@ -29,14 +29,14 @@
                 {% if not request.user.is_authenticated %}
                   <li><a href="{% url 'login' %}">Login</a></li>
                 {% else %}
-                  <li><a href="{% url 'logout' %}?next={% url 'subreddit_view' %}">Logout</a></li>
+                  <li><a href="{% url 'logout' %}?next={% url 'index_view' %}">Logout</a></li>
                   <li class="clearfix"><h5 class="pull-right navbar-text">You are logged in as: {{ request.user }}</h5></li>
                 {% endif %}
               </ul>
               </div>
             </nav>
 
-        <div class="container-fluid">
+        <div class="container">
 
             {% block content %}
             {% endblock %}

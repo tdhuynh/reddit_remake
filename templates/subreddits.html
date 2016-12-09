@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+<!-- add a sidebar menu for all subs -->
+
 {% block content %}
 
-
+<div class="row">
 {% for subreddit in object_list %}
-<div class="panel panel-default">
+<div class="col-md-9">
+  <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title"><a href="{% url 'subreddit_detail_view' subreddit.id %}">{{ subreddit }}</a></h3>
     </div>
@@ -17,6 +20,10 @@
             <b>Posts: {{ subreddit.current_count }}</b>
         </p>
     </div>
+  </div>
 </div>
-    {% endfor %}
+  {% endfor %}
+
+
+</div>
 {% endblock %}

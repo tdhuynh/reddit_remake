@@ -1,45 +1,49 @@
 {% extends 'base.html' %}
+
+<!-- add a right side welcome menu and pagination, also style all the forms -->
+
 {% block content %}
 
             <div class="row">
+              <div class="col-md-10">
             {% for post in object_list %}
-              <div class="col-sm-1 ">
-                  <div class="row center-block">
-                    <div class="col">
-                    <div class="btn-toolbar" role='group'>
-                      <form class="" action="{% url 'post_upvote_view' post.id %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="value" value=true>
-                        <button type="submit" class='btn btn-default btn-sm'>
-                          <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                  </div>
-                  <div class="row center-block">
-                    <div class="col">
-                      <span class="badge">{{ post.score }}</span>
-                    </div>
-                  </div>
-                  <div class="row center-block">
-                    <div class="col">
-                    <div class="btn-toolbar" role='group'>
-                      <form class="" action="{% url 'post_downvote_view' post.id %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="value" value=false>
-                        <button type="submit" class='btn btn-default btn-sm'>
-                          <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                  </div>
-              </div>
-
-              <div class="col-sm-11">
               <div class="panel panel-default">
                 <div class="panel-body">
+                  <div class="col-sm-1 ">
+                      <div class="row center-block">
+                        <div class="col">
+                        <div class="btn-toolbar" role='group'>
+                          <form class="" action="{% url 'post_upvote_view' post.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="value" value=true>
+                            <button type="submit" class='btn btn-default btn-sm'>
+                              <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                      </div>
+                      <div class="row center-block">
+                        <div class="col">
+                          <span class="badge">{{ post.score }}</span>
+                        </div>
+                      </div>
+                      <div class="row center-block">
+                        <div class="col">
+                        <div class="btn-toolbar" role='group'>
+                          <form class="" action="{% url 'post_downvote_view' post.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="value" value=false>
+                            <button type="submit" class='btn btn-default btn-sm'>
+                              <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                      </div>
+                  </div>
+
+                  <div class="col-sm-11">
                   {% if post.url %}
                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                     <a href="{{ post.url }}">{{ post.title }}</a>
@@ -47,16 +51,44 @@
                     <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
                     <a href="{% url 'post_detail_view' post.id %}">{{ post.title }}</a>
                   {% endif %}
-                </div>
-                <div class="panel-footer">
+                  <br><br>
                     Submitted {{ post.creation_time|timesince }} ago by {{ post.user }}
-                    to <a href="{% url 'subreddit_detail_view' post.subreddit.id %}">{{ post.subreddit }}</a><br>
+                    to <a href="{% url 'subreddit_detail_view' post.subreddit.id %}">{{ post.subreddit }}</a>
+                    <br>
                     <a href="{% url 'post_detail_view' post.id %}">Comments</a>
-                </div>
 
+                  </div>
               </div>
               </div>
               {% endfor %}
+              </div>
+
+              <div class="col-md-2">
+                <div class="affix">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                      <h3 class="panel-title">Welcome to Reddit-Ish!</a></h3>
+                  </div>
+                  <div class="panel-body">
+                      <p>
+                          This app is very similar the ever so popular Reddit.
+                      </p>
+                  </div>
+                  <div class="panel-footer">
+                    {% if not request.user.is_authenticated %}
+                    New to Reddit-Ish?
+                    <br>
+                    <a href="{% url 'user_create_view' %}">Make an account with us!</a>
+                    <br>
+                    OR
+                    <br>
+                    <a href="{% url 'login' %}">Login!</a>
+
+                    {% endif %}
+                  </div>
+                </div>
+                </div>
+              </div>
             </div>
 
 
