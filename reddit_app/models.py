@@ -20,7 +20,8 @@ class Subreddit(models.Model):
         return round(self.post_set.filter(creation_time__gte=timespan).count()/7, 3)
 
     def recent_posts(self):
-        return self.post_set.all()[:20]
+        # return self.post_set.all()[:20]
+        return self.post_set.all()
 
     def __str__(self):
         return self.name
@@ -73,6 +74,9 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
+    @property
+    def score(self):
+        return sum([comment_obj.comment_score for comment_obj in self.commentvote_set.all()])
 
 class PostVote(models.Model):
     user = models.ForeignKey(User)
@@ -82,8 +86,26 @@ class PostVote(models.Model):
     class Meta:
         unique_together = ('user', 'post')
 
+    def __str__(self):
+        return "{} - {}".format(self.post.title, self.score)
+
     @property
     def score(self):
+        if self.value:
+            return 1
+        return -1
+
+
+class CommentVote(models.Model):
+    user = models.ForeignKey(User)
+    comment = models.ForeignKey(Comment)
+    value = models.BooleanField()
+
+    class Meta:
+        unique_together = ('user', 'comment')
+
+    @property
+    def comment_score(self):
         if self.value:
             return 1
         return -1

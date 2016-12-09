@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from reddit_app.models import Subreddit, Post, Comment, PostVote
+from reddit_app.models import Subreddit, Post, Comment, PostVote, CommentVote
 
 from django.urls import reverse
 
@@ -112,4 +112,23 @@ class PostVoteView(CreateView):
         instance = form.save(commit=False)
         instance.user = self.request.user
         instance.post = Post.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
+
+
+class CommentVoteView(CreateView):
+    model = CommentVote
+    fields = ('value',)
+
+    def get_success_url(self, **kwargs):
+        post_id = Comment.objects.get(id=self.kwargs['pk']).post.id
+        return reverse('post_detail_view', args=[post_id])
+
+    def form_valid(self, form):
+        try:
+            CommentVote.objects.get(user=self.request.user, comment_id=self.kwargs['pk']).delete()
+        except CommentVote.DoesNotExist:
+            pass
+        instance = form.save(commit=False)
+        instance.user = self.request.user
+        instance.comment = Comment.objects.get(pk=self.kwargs['pk'])
         return super().form_valid(form)

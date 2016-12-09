@@ -9,24 +9,65 @@
         <p>
             {{ object.description }}
         </p>
+        {% if object.url %}
         <p>
-            {{ object.url }}
+            <a href="{{ object.url }}">{{ object.url }}</a>
         </p>
+        {% endif %}
     </div>
     <div class="panel-footer">
     <p>
         Created by <b>{{ object.user }}</b>, {{ object.creation_time|timesince }} ago
     </p>
+    {% if request.user == object.user %}
     <p>
         <a href="{% url 'post_update_view' object.id %}">Update Post</a>
     </p>
+    {% endif %}
     <p>
         <a href="{% url 'comment_create_view' object.id %}">Add Comment</a>
     </p>
     </div>
 </div>
 
+<div class="row">
 {% for comment in object.all_comments %}
+<div class="col-sm-1">
+  <div class="row center-block">
+    <div class="col">
+    <div class="btn-toolbar" role='group'>
+      <form class="" action="{% url 'comment_upvote_view' comment.id %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="value" value=true>
+        <button type="submit" class='btn btn-default btn-sm'>
+          <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+  </div>
+  <div class="row center-block">
+    <div class="col">
+      <span class="badge">{{ comment.score }}</span>
+    </div>
+  </div>
+  <div class="row center-block">
+    <div class="col">
+    <div class="btn-toolbar" role='group'>
+      <form class="" action="{% url 'comment_downvote_view' comment.id %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="value" value=false>
+        <button type="submit" class='btn btn-default btn-sm'>
+          <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="col-sm-11">
+
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <b>{{ comment.user }}</b>, {{ comment.created_time|timesince }} ago.
@@ -38,7 +79,9 @@
         <a href="{% url 'comment_update_view' comment.id %}">Update Comment</a>
     </div>
 </div>
+</div>
 {% endfor %}
+</div>
     <p>
             <p>
             </p>

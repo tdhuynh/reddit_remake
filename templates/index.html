@@ -40,13 +40,20 @@
               <div class="col-sm-11">
               <div class="panel panel-default">
                 <div class="panel-body">
-                  <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-                  <a href="{% url 'post_detail_view' post.id %}">{{ post.title }}</a>
+                  {% if post.url %}
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                    <a href="{{ post.url }}">{{ post.title }}</a>
+                  {% else %}
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                    <a href="{% url 'post_detail_view' post.id %}">{{ post.title }}</a>
+                  {% endif %}
                 </div>
                 <div class="panel-footer">
                     Submitted {{ post.creation_time|timesince }} ago by {{ post.user }}
-                    to <a href="{% url 'subreddit_detail_view' post.subreddit.id %}">{{ post.subreddit }}</a>
+                    to <a href="{% url 'subreddit_detail_view' post.subreddit.id %}">{{ post.subreddit }}</a><br>
+                    <a href="{% url 'post_detail_view' post.id %}">Comments</a>
                 </div>
+
               </div>
               </div>
               {% endfor %}
