@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'gm04*jb7oau2w50w#)))9@)%*e%+-rfis0%3^^e+9o68f&%ebi'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["redditish-tdhuynh.herokuapp.com", 'localhost']
 
 
 # Application definition
@@ -81,6 +81,11 @@ DATABASES = {
     }
 }
 
+import dj_database_url
+
+heroku_database = dj_database_url.config()
+if heroku_database:
+    DATABASES['default'] = heroku_database
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
