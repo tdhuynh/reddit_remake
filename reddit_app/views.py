@@ -5,17 +5,20 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from reddit_app.models import Subreddit, Post, Comment, PostVote, CommentVote
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 from django.urls import reverse
 
 class IndexView(ListView):
     template_name = 'index.html'
     model = Post
-
+    paginate_by = 10
 
 class SubredditView(ListView):
     template_name = 'subreddits.html'
     model = Subreddit
+    paginate_by = 5
 
 
 class SubredditDetailView(DetailView):

@@ -73,24 +73,46 @@
                       <p>
                           This app is very similar the ever so popular Reddit.
                       </p>
+                      {% if not request.user.is_authenticated %}
+                      New to Reddit-Ish?
+                      <br>
+                      <a href="{% url 'user_create_view' %}">Make an account with us!</a>
+                      <br>
+                      OR
+                      <br>
+                      <a href="{% url 'login' %}">Login!</a>
+
+                      {% endif %}
                   </div>
                   <div class="panel-footer">
-                    {% if not request.user.is_authenticated %}
-                    New to Reddit-Ish?
-                    <br>
-                    <a href="{% url 'user_create_view' %}">Make an account with us!</a>
-                    <br>
-                    OR
-                    <br>
-                    <a href="{% url 'login' %}">Login!</a>
 
-                    {% endif %}
-                  </div>
+                    <div class="pagination">
+                          {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}">
+                              <button type="button" class="btn btn-default btn-sm">Previous Page</button>
+                            </a>
+                          {% else %}
+                            <button type="button" class="btn btn-default btn-sm" disabled='disabled'>Previous Page</button>
+                          {% endif %}
+                          {{ page_obj.number }} of {{ paginator.num_pages }}
+                          {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">
+                              <button type="button" class="btn btn-default btn-sm">Next Page</button>
+                            </a>
+                          {% else %}
+                          <button type="button" class="btn btn-default btn-sm" disabled="disabled">Next Page</button>
+
+                          {% endif %}
+                    </div>
+
                 </div>
                 </div>
               </div>
             </div>
 
+
+
+{% endblock %}
 
 
             <h3>Recent Posts within the last 24 hours?</h3>
@@ -106,4 +128,3 @@
                 {{ post.title }}: {{ post.is_hot }}
                 </p>
             {% endfor %}
-{% endblock %}

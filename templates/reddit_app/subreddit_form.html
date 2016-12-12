@@ -2,9 +2,17 @@
 
 {% block content %}
     <h1>Add a Subreddit</h1>
-    <form class="" action="" method="post">
+    <form class="form-horizontal" action="" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" name="" value="Create!">
+        <div class="form-group">
+          <label for="id_name">Subreddit Name</label>
+          <input id='id_name' maxlength='50' class="form-control" type="text" name="name" placeholder='Subreddit Name'required>
+        </div>
+
+        <div class="form-group">
+          <label for="id_description">Description</label>
+          <textarea id='id_description' class="form-control" name="description" rows="10" cols="40" placeholder="Tell us about your Subreddit!" required></textarea>
+        </div>
+        <input type="submit" name="" class='btn btn-default' value="Submit">
     </form>
 {% endblock %}

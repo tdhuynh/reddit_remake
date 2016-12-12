@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="row">
-<div class="col-md-9">
+<div class="col-md-10">
   {% for subreddit in object_list %}
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -23,7 +23,7 @@
 </div>
 
 
-<div class="col-md-3">
+<div class="col-md-2">
   <div class="affix">
 
 
@@ -35,6 +35,26 @@
       A list of all our subreddits.
       <br>
       Don't see one of your interest? <a href="{% url 'subreddit_create_view' %}">Start one!</a>
+    </div>
+    <div class="panel-footer">
+      <div class="pagination">
+            {% if page_obj.has_previous %}
+              <a href="?page={{ page_obj.previous_page_number }}">
+                <button type="button" class="btn btn-default btn-sm">Previous Page</button>
+              </a>
+            {% else %}
+              <button type="button" class="btn btn-default btn-sm" disabled='disabled'>Previous Page</button>
+            {% endif %}
+            {{ page_obj.number }} of {{ paginator.num_pages }}
+            {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}">
+                <button type="button" class="btn btn-default btn-sm">Next Page</button>
+              </a>
+            {% else %}
+            <button type="button" class="btn btn-default btn-sm" disabled="disabled">Next Page</button>
+
+            {% endif %}
+      </div>
     </div>
   </div>
 </div>
