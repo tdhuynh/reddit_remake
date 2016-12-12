@@ -22,11 +22,11 @@
                   <li><a href="{% url 'index_view' %}">Home Page</a></li>
                   <li><a href="{% url 'subreddit_view' %}">All Subreddits</a></li>
                   <li><a href="{% url 'subreddit_create_view' %}">Add Subreddit</a></li>
-                  <li><a href="{% url 'user_create_view' %}">New User</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav pull-right">
                 {% if not request.user.is_authenticated %}
+                  <li><a href="{% url 'user_create_view' %}">New User</a></li>
                   <li><a href="{% url 'login' %}">Login</a></li>
                 {% else %}
                   <li><a href="{% url 'logout' %}?next={% url 'index_view' %}">Logout</a></li>

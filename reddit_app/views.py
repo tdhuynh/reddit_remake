@@ -102,7 +102,7 @@ class UserCreateView(CreateView):
     success_url = "/"
 
 
-class PostVoteView(CreateView):
+class IndexPostVoteView(CreateView):
     model = PostVote
     success_url = '/'
     fields = ('value',)
@@ -116,6 +116,25 @@ class PostVoteView(CreateView):
         instance.user = self.request.user
         instance.post = Post.objects.get(pk=self.kwargs['pk'])
         return super().form_valid(form)
+
+
+class PostVoteView(CreateView):
+    model = PostVote
+    fields = ('value',)
+
+    def form_valid(self, form):
+        try:
+            PostVote.objects.get(user=self.request.user, post_id=self.kwargs['pk']).delete()
+        except PostVote.DoesNotExist:
+            pass
+        instance = form.save(commit=False)
+        instance.user = self.request.user
+        instance.post = Post.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
+
+    def get_success_url(self, **kwargs):
+        sub_id = Post.objects.get(id=self.kwargs['pk']).subreddit.id
+        return reverse('subreddit_detail_view', args=[sub_id])
 
 
 class CommentVoteView(CreateView):
