@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
-{% load staticfiles %}
 
 <!-- add a sidebar menu for all subs -->
 
 {% block content %}
-
 <div class="row">
-{% for subreddit in object_list %}
 <div class="col-md-9">
+  {% for subreddit in object_list %}
   <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title"><a href="{% url 'subreddit_detail_view' subreddit.id %}">{{ subreddit }}</a></h3>
@@ -21,8 +19,28 @@
         </p>
     </div>
   </div>
+    {% endfor %}
 </div>
-  {% endfor %}
+
+
+<div class="col-md-3">
+  <div class="affix">
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class='panel-title'>Subreddits</h3>
+    </div>
+    <div class="panel-body">
+      A list of all our subreddits.
+      <br>
+      Don't see one of your interest? <a href="{% url 'subreddit_create_view' %}">Start one!</a>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
 
 
 </div>

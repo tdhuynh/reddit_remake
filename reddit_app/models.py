@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 
 class Subreddit(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     description = models.TextField()
     creation = models.DateTimeField(auto_now_add=True)
 
@@ -26,6 +26,8 @@ class Subreddit(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ("name",)
 
 class Post(models.Model):
     title = models.CharField(max_length=175)
