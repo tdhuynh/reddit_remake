@@ -74,13 +74,23 @@
                           This app is very similar the ever so popular Reddit.
                       </p>
                       {% if not request.user.is_authenticated %}
+                      <form class="form-inline" action="/login/" method="post">
+                          {% csrf_token %}
+                          <div class="form-group">
+                            <input id='id_username' class="form-control" type="text" name="username" placeholder='Username' required>
+                          </div>
+                          <br><br>
+                          <div class="form-group">
+                            <input id='id_password' class="form-control" type="password" name="password" placeholder='Password' required>
+                          </div>
+                          <br><br>
+                          <input type="submit" class='btn btn-default' name="name" value="Login">
+                      </form>
+                      <hr>
                       New to Reddit-Ish?
                       <br>
                       <a href="{% url 'user_create_view' %}">Make an account with us!</a>
                       <br>
-                      OR
-                      <br>
-                      <a href="{% url 'login' %}">Login!</a>
 
                       {% endif %}
                   </div>
