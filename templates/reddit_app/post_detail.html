@@ -76,7 +76,10 @@
         {{ comment.text }}
     </div>
     <div class="panel-footer">
-        <a href="{% url 'comment_update_view' comment.id %}">Update Comment</a>
+        <a href="{% url 'comment_update_view' comment.id %}">Update</a>
+        {% if request.user == comment.user %}
+        | <a href="{% url 'comment_delete_view' comment.id %}">Delete</a>
+        {% endif %}
     </div>
 </div>
 </div>

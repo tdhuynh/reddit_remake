@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from reddit_app.models import Subreddit, Post, Comment, PostVote, CommentVote
@@ -70,6 +70,7 @@ class PostUpdateView(UpdateView):
     def get_queryset(self):
         return Post.objects.filter(user=self.request.user)
 
+
 class CommentCreateView(CreateView):
     model = Comment
     fields = ('text',)
@@ -90,6 +91,17 @@ class CommentUpdateView(UpdateView):
 
     def get_success_url(self, **kwargs):
         post_id = Comment.objects.get(id=self.kwargs["pk"]).post.id
+        return reverse('post_detail_view', args=[post_id])
+
+    def get_queryset(self):
+        return Comment.objects.filter(user=self.request.user)
+
+
+class CommentDeleteView(DeleteView):
+    model = Comment
+
+    def get_success_url(self, **kwargs):
+        post_id = Comment.objects.get(id=self.kwargs['pk']).post.id
         return reverse('post_detail_view', args=[post_id])
 
     def get_queryset(self):
