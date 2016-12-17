@@ -1,18 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <div class="container">
     <h1>Add a Subreddit</h1>
-    <form class="form-horizontal" action="" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="id_name">Subreddit Name</label>
-          <input id='id_name' maxlength='50' class="form-control" type="text" name="name" placeholder='Subreddit Name'required>
-        </div>
 
-        <div class="form-group">
-          <label for="id_description">Description</label>
-          <textarea id='id_description' class="form-control" name="description" rows="10" cols="40" placeholder="Tell us about your Subreddit!" required></textarea>
+
+    <div class="row">
+      <div class="col-md-6">
+        <form class="form-horizontal" action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="id_name">Subreddit Name</label>
+              <input id='id_name' maxlength='50' class="form-control" type="text" name="name" placeholder='Subreddit Name'required>
+            </div>
+
+            <div class="form-group">
+              <label for="id_description">Description</label>
+              <textarea id='id_description' class="form-control" name="description" rows="10" cols="40" placeholder="Subreddit Description" required></textarea>
+            </div>
+            <input type="submit" name="" class='btn btn-default' value="Submit">
+        </form>
         </div>
-        <input type="submit" name="" class='btn btn-default' value="Submit">
-    </form>
+      </div>
+    </div>
 {% endblock %}
